@@ -29,7 +29,10 @@ class ClockDreamService : DreamService() {
         val now = HebrewCalendar.getInstance(ULocale("en_US@calendar=hebrew"))
 
         val weekDay = getWeekDay(now)
+        val time = getTime(now)
+
         requireViewById<TextView>(R.id.text_week_day).text = weekDay
+        requireViewById<TextView>(R.id.text_time).text = time
 
         val date = StringBuilder()
             .append(now.get(HebrewCalendar.HOUR_OF_DAY))
@@ -47,6 +50,14 @@ class ClockDreamService : DreamService() {
             .append(now.get(HebrewCalendar.YEAR))
 
         Log.e(tag, date.toString())
+    }
+
+    private fun getTime(now: Calendar): String {
+        return "%02d:%02d:%02d".format(
+            now.get(HebrewCalendar.HOUR_OF_DAY),
+            now.get(HebrewCalendar.MINUTE),
+            now.get(HebrewCalendar.SECOND)
+        )
     }
 
     private fun getWeekDay(now: Calendar): String {
