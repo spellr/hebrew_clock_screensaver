@@ -6,7 +6,6 @@ import android.icu.util.ULocale
 import android.service.dreams.DreamService
 import android.util.Log
 import android.widget.TextView
-import java.lang.IllegalStateException
 
 class ClockDreamService : DreamService() {
     private val tag: String
@@ -55,9 +54,34 @@ class ClockDreamService : DreamService() {
     }
 
     private fun getDate(now: Calendar): String {
-        val monthDay = now.get(HebrewCalendar.DAY_OF_MONTH)
-        val day = dayToString(monthDay)
-        return day
+        val day = dayToString(now.get(HebrewCalendar.DAY_OF_MONTH))
+        val month = monthToString(now.get(HebrewCalendar.MONTH), isLeapYear(now))
+        return "$day $month"
+    }
+
+    private fun monthToString(month: Int, leapYear: Boolean): String {
+        return when (month) {
+            HebrewCalendar.TISHRI -> "תשרי"
+            HebrewCalendar.HESHVAN -> "חשוון"
+            HebrewCalendar.KISLEV -> "כסלו"
+            HebrewCalendar.TEVET -> "טבת"
+            HebrewCalendar.SHEVAT -> "שבט"
+            HebrewCalendar.ADAR_1 -> "אדר א'"
+            HebrewCalendar.ADAR -> if (leapYear) "אדר ב'" else "אדר"
+            HebrewCalendar.NISAN -> "ניסן"
+            HebrewCalendar.IYAR -> "אייר"
+            HebrewCalendar.SIVAN -> "סיוון"
+            HebrewCalendar.TAMUZ -> "תמוז"
+            HebrewCalendar.AV -> "אב"
+            HebrewCalendar.ELUL -> "אלול"
+            else -> throw IllegalStateException("Unknown month $month")
+        }
+    }
+
+    private fun isLeapYear(now: Calendar): Boolean {
+        val year = now.get(HebrewCalendar.YEAR)
+        val leapRemainders = intArrayOf(0, 3, 6, 8, 11, 14, 17)
+        return leapRemainders.contains(year % 19)
     }
 
     private fun dayToString(monthDay: Int): String {
@@ -69,7 +93,7 @@ class ClockDreamService : DreamService() {
             1 -> "י"
             2 -> "כ"
             3 -> "ל"
-            else -> throw IllegalStateException("Unknown month $monthDay")
+            else -> throw IllegalStateException("Unknown day $monthDay")
         }
         val onesStr = when (ones) {
             0 -> ""
@@ -82,7 +106,7 @@ class ClockDreamService : DreamService() {
             7 -> "ז"
             8 -> "ח"
             9 -> "ט"
-            else -> throw IllegalStateException("Unknown month $monthDay")
+            else -> throw IllegalStateException("Unknown day $monthDay")
         }
 
         return if (monthDay == 15) {
