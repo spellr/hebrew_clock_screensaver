@@ -3,8 +3,11 @@ package com.example.clock_screensaver
 import android.icu.util.Calendar
 import android.icu.util.HebrewCalendar
 import android.icu.util.ULocale
+import android.os.Handler
 import android.service.dreams.DreamService
 import android.widget.TextView
+import java.util.Timer
+import java.util.TimerTask
 
 class ClockDreamService : DreamService() {
 
@@ -14,6 +17,12 @@ class ClockDreamService : DreamService() {
         isInteractive = false
         isFullscreen = true
         setContentView(R.layout.clock_saver)
+
+        Timer(false).schedule(object : TimerTask() {
+            override fun run() {
+                Handler(mainLooper).post { updateDate() }
+            }
+        }, 0, 100)
 
         updateDate()
     }
