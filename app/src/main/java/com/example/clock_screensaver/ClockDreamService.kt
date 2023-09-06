@@ -30,11 +30,13 @@ class ClockDreamService : DreamService() {
 
         val weekDay = getWeekDay(now)
         val time = getTime(now)
+        val date = getDate(now)
 
         requireViewById<TextView>(R.id.text_week_day).text = weekDay
         requireViewById<TextView>(R.id.text_time).text = time
+        requireViewById<TextView>(R.id.text_hebrew_date).text = date
 
-        val date = StringBuilder()
+        val tmp = StringBuilder()
             .append(now.get(HebrewCalendar.HOUR_OF_DAY))
             .append(":")
             .append(now.get(HebrewCalendar.MINUTE))
@@ -49,7 +51,51 @@ class ClockDreamService : DreamService() {
             .append("-")
             .append(now.get(HebrewCalendar.YEAR))
 
-        Log.e(tag, date.toString())
+        Log.e(tag, date)
+    }
+
+    private fun getDate(now: Calendar): String {
+        val monthDay = now.get(HebrewCalendar.DAY_OF_MONTH)
+        val day = dayToString(monthDay)
+        return day
+    }
+
+    private fun dayToString(monthDay: Int): String {
+        val tens = monthDay / 10
+        val ones = monthDay % 10
+
+        val tensStr = when (tens) {
+            0 -> ""
+            1 -> "י"
+            2 -> "כ"
+            3 -> "ל"
+            else -> throw IllegalStateException("Unknown month $monthDay")
+        }
+        val onesStr = when (ones) {
+            0 -> ""
+            1 -> "א"
+            2 -> "ב"
+            3 -> "ג"
+            4 -> "ד"
+            5 -> "ה"
+            6 -> "ו"
+            7 -> "ז"
+            8 -> "ח"
+            9 -> "ט"
+            else -> throw IllegalStateException("Unknown month $monthDay")
+        }
+
+        return if (monthDay == 15) {
+            "ט\"ו"
+        } else if (monthDay == 16) {
+            "ט\"ז"
+        } else if (ones == 0) {
+            "$tensStr'"
+        } else if (tens == 0) {
+            "$onesStr'"
+        } else {
+            "$tensStr\"$onesStr"
+        }
     }
 
     private fun getTime(now: Calendar): String {
