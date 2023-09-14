@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    Greeting()
                 }
             }
         }
@@ -30,9 +30,13 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name",
+        text = "Welcome! To set up the screen-saver:\n" +
+                "1. Go to settings\n" +
+                "2. Search for screensaver\n" +
+                "3. Choose \"Hebrew Clock\" as your screen saver\n" +
+                "4. Setup a screen timeout\n",
         modifier = modifier
     )
 }
@@ -41,6 +45,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     Clock_screensaverTheme {
-        Greeting("Android")
+        Greeting()
     }
 }
