@@ -1,4 +1,4 @@
-package com.example.clock_screensaver
+package com.clock.clock_screensaver
 
 import org.junit.Test
 

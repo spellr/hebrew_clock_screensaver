@@ -1,4 +1,4 @@
-package com.example.clock_screensaver.ui.theme
+package com.clock.clock_screensaver.ui.theme
 
 import android.app.Activity
 import android.os.Build

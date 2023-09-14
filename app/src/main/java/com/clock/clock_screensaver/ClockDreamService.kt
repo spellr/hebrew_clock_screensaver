@@ -1,4 +1,4 @@
-package com.example.clock_screensaver
+package com.clock.clock_screensaver
 
 import android.icu.util.Calendar
 import android.icu.util.HebrewCalendar
@@ -6,6 +6,7 @@ import android.icu.util.ULocale
 import android.os.Handler
 import android.service.dreams.DreamService
 import android.widget.TextView
+import com.clock.clock_screensaver.R
 import java.util.Timer
 import java.util.TimerTask
 

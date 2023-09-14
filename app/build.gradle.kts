@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.clock_screensaver"
+    namespace = "com.clock.clock_screensaver"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.clock_screensaver"
+        applicationId = "com.clock.clock_screensaver"
         minSdk = 28
         targetSdk = 33
         versionCode = 1
