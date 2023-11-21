@@ -110,10 +110,9 @@ class ClockDreamService : DreamService() {
     }
 
     private fun getTime(now: Calendar): String {
-        return "%02d:%02d:%02d".format(
+        return "%02d:%02d".format(
             now.get(HebrewCalendar.HOUR_OF_DAY),
-            now.get(HebrewCalendar.MINUTE),
-            now.get(HebrewCalendar.SECOND)
+            now.get(HebrewCalendar.MINUTE)
         )
     }
 
